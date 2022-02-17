@@ -65,8 +65,8 @@ Head over to `http://localhost:3000` and start using Multisig Wallet!
 
 ![CreateTransfer GIF](https://raw.githubusercontent.com/jacobvanschenck/Multisig-Wallet/master/GIFs/CreateTransfer.gif)
 
-    * Chose and amount and address to which to send funds
-    * Make sure wallet balance has enough wei
+-   Chose and amount and address to which to send funds
+-   Make sure wallet balance has enough wei
 
 ### Approve Transfer | Approver Address can Approve Transations
 
