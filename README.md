@@ -20,13 +20,19 @@ Solidity | React | [Truffle](https://trufflesuite.com/) | [OpenZeppelin](https:/
 
 ![ConnectWalletWithMetamask GIF](https://raw.githubusercontent.com/jacobvanschenck/Multisig-Wallet/master/GIFs/ConnectWalletWithMetamask.gif)
 
+---
+
 ### Create Transaction
 
 ![CreateTransfer GIF](https://raw.githubusercontent.com/jacobvanschenck/Multisig-Wallet/master/GIFs/CreateTransfer.gif)
 
+---
+
 ### Approve Transfer | Approver Address can Approve Transations
 
 ![ApproveTransfer GIF](https://raw.githubusercontent.com/jacobvanschenck/Multisig-Wallet/master/GIFs/ApproveTransfer.gif)
+
+---
 
 ### Only Approvers | Other Addresses cannot approve Transfers
 
