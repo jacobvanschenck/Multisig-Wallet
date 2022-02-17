@@ -65,6 +65,8 @@ Head over to `http://localhost:3000` and start using Multisig Wallet!
 -   Use [this link](https://multi-sig-wallet-vs.netlify.app/) to head over to the live site
 -   Login with Metamask
 -   Make sure to change Network to Kovan on Metamask
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 ### Create Transfer
 
@@ -72,6 +74,8 @@ Head over to `http://localhost:3000` and start using Multisig Wallet!
 
 -   Chose and amount and address to which to send funds
 -   Make sure wallet balance has enough wei
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 ### Approve Transfer
 
@@ -79,6 +83,8 @@ Head over to `http://localhost:3000` and start using Multisig Wallet!
 
 -   Must use one of the 3 approved address to approve transfers
 -   Quorum of 2 means 2 of the 3 address mush approve a transfer for it go to through
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 ### Other Addresses cannot approve Transfers
 
@@ -86,6 +92,10 @@ Head over to `http://localhost:3000` and start using Multisig Wallet!
 
 -   Metamask detects the auto failure of non approved addresses
 -   Kovan.Etherscan shows that the transaction failed due to `only approvers allowed`. [FailedTransaction](https://kovan.etherscan.io/tx/0xc833486eb58cff0a9c1ac56ec312e706ebf5f469ca6c148577c01a287f7a6b8b)
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+---
 
 ## Feedback 🤝
 
