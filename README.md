@@ -73,14 +73,14 @@ Head over to `http://localhost:3000` and start using Multisig Wallet!
 -   Chose and amount and address to which to send funds
 -   Make sure wallet balance has enough wei
 
-### Approve Transfer | Approver Address can Approve Transations
+### Approve Transfer
 
 ![ApproveTransfer GIF](https://raw.githubusercontent.com/jacobvanschenck/Multisig-Wallet/master/GIFs/ApproveTransfer.gif)
 
 -   Must use one of the 3 approved address to approve transfers
 -   Quorum of 2 means 2 of the 3 address mush approve a transfer for it go to through
 
-### Only Approvers | Other Addresses cannot approve Transfers
+### Other Addresses cannot approve Transfers
 
 ![OnlyApprover GIF](https://raw.githubusercontent.com/jacobvanschenck/Multisig-Wallet/master/GIFs/OnlyApprover.gif)
 
