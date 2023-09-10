@@ -1,4 +1,5 @@
-pragma solidity 0.8.0;
+//SPDX-License-Identifier: MIT
+pragma solidity 0.8.19;
 
 contract Wallet {
     address[] public approvers;
@@ -13,7 +14,7 @@ contract Wallet {
     Transfer[] public transfers;
     mapping(address => mapping(uint => bool)) public approvals;
     
-    constructor(address[] memory _approvers, uint _quorum) {
+    constructor(address[] memory _approvers, uint _quorum) payable {
         approvers = _approvers;
         quorum = _quorum;
     }
@@ -30,7 +31,7 @@ contract Wallet {
         transfers.push(Transfer(
             transfers.length,
             amount,
-            to,
+            to
             0,
             false
         ));
