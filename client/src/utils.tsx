@@ -52,9 +52,9 @@ function getClients() {
         chain: sepolia,
         transport: http(
             `https://eth-sepolia.g.alchemy.com/v2/${
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                //@ts-ignore
-                import.meta.env.VITE_ALCHEMY_API_KEY
+                process.env.NETLIFY === 'true'
+                    ? process.env.VITE_ALCHEMY_API_KEY
+                    : import.meta.env.VITE_ALCHEMY_API_KEY
             }`
         ),
     });
