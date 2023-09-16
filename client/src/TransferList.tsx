@@ -1,6 +1,12 @@
-import React from 'react';
+import { PrimaryButton } from './components/PrimaryButton';
+import { Transfer } from './utils';
 
-function TransferList({ transfers, approveTransfer }) {
+type TransferListProps = {
+    transfers: Array<Transfer>;
+    approveTransfer: (id: string) => Promise<void>;
+};
+
+function TransferList({ transfers, approveTransfer }: TransferListProps) {
     return (
         <div className="rounded-md bg-slate-100 border-[1px] border-slate-200 px-8 py-4">
             <h2 className="text-slate-600 font-bold text-lg pb-4">Transfers</h2>
@@ -17,10 +23,10 @@ function TransferList({ transfers, approveTransfer }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {transfers.map((transfer) => (
+                    {transfers.map((transfer: Transfer) => (
                         <tr
                             className="border-b-slate-200 border-b-[1px]"
-                            key={transfer.id}
+                            key={transfer.id.toString()}
                         >
                             <td className="px-1 text-slate-500">
                                 {transfer.id.toString()}
@@ -36,16 +42,15 @@ function TransferList({ transfers, approveTransfer }) {
                             </td>
                             <td className="flex gap-2 px-1 text-slate-500">
                                 {transfer.approvals.toString()}
-                                <button
-                                    className="rounded-md bg-cyan-500 text-slate-50 px-3 py-1 disabled:bg-slate-200"
-                                    id="approved"
-                                    disabled={
-                                        transfer.isTrasferApprovedByCurrentUser
+                                <PrimaryButton
+                                    action={async () =>
+                                        await approveTransfer(
+                                            transfer.id.toString()
+                                        )
                                     }
-                                    onClick={() => approveTransfer(transfer.id)}
                                 >
                                     approve
-                                </button>
+                                </PrimaryButton>
                             </td>
                             <td className="px-1 text-slate-500">
                                 {transfer.sent ? 'yes' : 'no'}

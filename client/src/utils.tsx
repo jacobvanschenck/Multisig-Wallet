@@ -27,7 +27,7 @@ export type Transfer = {
     sent: boolean;
 };
 
-const getWallet = async (
+export const getWallet = async (
     walletClient: WalletClient,
     publicClient: PublicClient
 ) => {
@@ -40,15 +40,8 @@ const getWallet = async (
     return wallet;
 };
 
-function getClients() {
-    const walletClient = createWalletClient({
-        chain: sepolia,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
-        transport: custom(window.ethereum),
-    }).extend(publicActions);
-
-    const publicClient = createPublicClient({
+export function getPublicClient() {
+    return createPublicClient({
         chain: sepolia,
         transport: http(
             `https://eth-sepolia.g.alchemy.com/v2/${
@@ -58,7 +51,13 @@ function getClients() {
             }`
         ),
     });
-    return { walletClient, publicClient };
 }
 
-export { getWallet, getClients };
+export function getWalletClient() {
+    return createWalletClient({
+        chain: sepolia,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        transport: custom(window.ethereum),
+    }).extend(publicActions);
+}

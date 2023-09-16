@@ -1,11 +1,19 @@
-import { useEffect, useState, useCallback } from 'react';
-import { getWallet, getClients, WalletContract, Transfer } from './utils';
+import { useState, useCallback } from 'react';
+import {
+    getWallet,
+    getWalletClient,
+    getPublicClient,
+    WalletContract,
+    Transfer,
+} from './utils';
 import Header from './Header';
 import NewTransfer from './NewTransfer';
 import TransferList from './TransferList';
-import { Address } from 'viem';
+import { Address, PublicClient } from 'viem';
+import ConnectWallet from './ConnectWallet';
 
 export default function App() {
+    const [publicClient, setPublicClient] = useState<PublicClient | null>(null);
     const [accounts, setAccounts] = useState<Array<Address> | null>(null);
     const [wallet, setWallet] = useState<WalletContract | null>(null);
     const [approvers, setApprovers] = useState<readonly Address[] | null>(null);
@@ -35,9 +43,11 @@ export default function App() {
         []
     );
 
-    const init = useCallback(async () => {
-        const { walletClient, publicClient } = getClients();
+    const connectWallet = useCallback(async () => {
+        const walletClient = getWalletClient();
+        const publicClient = getPublicClient();
         const accounts = await walletClient.requestAddresses();
+        setAccounts(accounts);
         const wallet = await getWallet(walletClient, publicClient);
         const approvers = await wallet.read.getApprovers();
         const quorum = await wallet.read.quorum();
@@ -45,6 +55,7 @@ export default function App() {
             address: wallet.address,
         });
         await getTransfers(wallet, accounts);
+        setPublicClient(publicClient);
         setAccounts(accounts);
         setWallet(wallet);
         setApprovers(approvers);
@@ -52,27 +63,30 @@ export default function App() {
         setBalance(balance);
     }, [getTransfers]);
 
-    useEffect(() => {
-        init();
-    }, [init]);
-
     const createTransfer = async (transfer: { amount: string; to: string }) => {
-        if (!wallet) return;
-        wallet.write.createTransfer([transfer.amount, transfer.to], {
-            account: accounts[0],
-        });
+        if (!wallet || !publicClient || !accounts) return;
+        const hash = await wallet.write.createTransfer(
+            [BigInt(transfer.amount), transfer.to as Address],
+            {
+                account: accounts[0],
+            }
+        );
+        await publicClient.waitForTransactionReceipt({ hash });
         setTransfers([]);
         getTransfers(wallet, accounts);
     };
 
-    const approveTransfer = (transferId: bigint) => {
-        if (!wallet) return;
-        wallet.write.approveTransfer([transferId], { account: accounts[0] });
+    const approveTransfer = async (transferId: string) => {
+        if (!wallet || !publicClient || !accounts) return;
+        const hash = await wallet.write.approveTransfer([BigInt(transferId)], {
+            account: accounts[0],
+        });
+        await publicClient.waitForTransactionReceipt({ hash });
         getTransfers(wallet, accounts);
     };
 
     if (!accounts || !wallet || !quorum || !balance || !approvers) {
-        return <div>Loading ........</div>;
+        return <ConnectWallet connectWallet={connectWallet} />;
     }
 
     return (

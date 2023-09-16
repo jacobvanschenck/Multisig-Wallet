@@ -1,16 +1,22 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import { PrimaryButton } from './components/PrimaryButton';
 
-function NewTransfer({ createTransfer }) {
-    const [transfer, setTransfer] = useState(undefined);
+type NewTransferProps = {
+    createTransfer: (transfer: { amount: string; to: string }) => Promise<void>;
+};
 
-    const updateTransfer = (e, field) => {
+function NewTransfer({ createTransfer }: NewTransferProps) {
+    const [transfer, setTransfer] = useState<{
+        amount: string | undefined;
+        to: string | undefined;
+    }>({ amount: undefined, to: undefined });
+
+    const updateTransfer = (
+        e: ChangeEvent<HTMLInputElement>,
+        field: string
+    ) => {
         const value = e.target.value;
         setTransfer({ ...transfer, [field]: value });
-    };
-
-    const submit = (e) => {
-        e.preventDefault();
-        createTransfer(transfer);
     };
 
     return (
@@ -18,7 +24,7 @@ function NewTransfer({ createTransfer }) {
             <h2 className="text-slate-600 font-bold text-lg pb-1">
                 Create Transfer
             </h2>
-            <form className="flex flex-col gap-2" onSubmit={(e) => submit(e)}>
+            <div className="flex flex-col gap-2">
                 <label className="text-slate-500" htmlFor="amount">
                     Amount (wei)
                 </label>
@@ -37,10 +43,16 @@ function NewTransfer({ createTransfer }) {
                     type="text"
                     onChange={(e) => updateTransfer(e, 'to')}
                 />
-                <button className="rounded-md px-3 py-1 bg-cyan-500 text-slate-50">
+                <PrimaryButton
+                    action={async () => {
+                        if (!transfer || !transfer.to || !transfer.amount)
+                            return;
+                        await createTransfer(transfer);
+                    }}
+                >
                     Submit
-                </button>
-            </form>
+                </PrimaryButton>
+            </div>
         </div>
     );
 }
