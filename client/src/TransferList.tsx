@@ -8,18 +8,18 @@ type TransferListProps = {
 
 function TransferList({ transfers, approveTransfer }: TransferListProps) {
     return (
-        <div className="rounded-md bg-slate-100 border-[1px] border-slate-200 px-8 py-4">
-            <h2 className="text-slate-600 font-bold text-lg pb-4">Transfers</h2>
+        <div className="py-4 px-8 rounded-md bg-slate-100 border-[1px] border-slate-200">
+            <h2 className="pb-4 text-lg font-bold text-slate-600">Transfers</h2>
             <table className="table-auto">
                 <thead>
                     <tr className="text-left">
-                        <th className="px-1 text-slate-300 text-xs">ID</th>
-                        <th className="px-1 text-slate-300 text-xs">Amount</th>
-                        <th className="px-1 text-slate-300 text-xs">To</th>
-                        <th className="px-1 text-slate-300 text-xs">
+                        <th className="px-1 text-xs text-slate-300">ID</th>
+                        <th className="px-1 text-xs text-slate-300">Amount</th>
+                        <th className="px-1 text-xs text-slate-300">To</th>
+                        <th className="px-1 text-xs text-slate-300">
                             Approvals
                         </th>
-                        <th className="px-1 text-slate-300 text-xs">Sent</th>
+                        <th className="px-1 text-xs text-slate-300">Sent</th>
                     </tr>
                 </thead>
                 <tbody>
