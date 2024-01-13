@@ -4,13 +4,13 @@
 
 A **wallet** that requires approval from 2 designated address to complete transactions.
 
-Here is the app running on the [Kovan network](https://multi-sig-wallet-vs.netlify.app/)
+Here is the app running on the [Sepolia network](https://multi-sig-wallet-vs.netlify.app/)
 
 ---
 
 ## Tech Stack ⚙️
 
-Solidity | React | [Truffle](https://trufflesuite.com/) | [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts) | [Bootstrap](https://getbootstrap.com/)
+[Solidity](https://soliditylang.org/) | [React](https://react.dev/) | [Hardhat](https://hardhat.org) | [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts) | [Viem](https://viem.sh/)
 
 ---
 
@@ -21,38 +21,53 @@ After that open up your terminal and run these commands:
 
 ```
 cd ProjectFolder
-npm install
+pnpm install
 ```
 
-### Run Truffle Blockchain 🔗
+#### Setup Blockchain 🔗
 
-Next step is to get the Truffle blockchain running locally
+Next step is to get the Hardhat blockchain node running locally
 
-```
-cd ProjectFolder
-truffle develop
-```
-
-Then inside of the `truffle(develop)` terminal run:
-
-```
-migrate --reset
+```bash
+cd /path_to_project/MultisigWallet/blockchain
+pnpm hardhat node
 ```
 
-### Start Client 🌐
+Then test, compile and deploy the contracts
 
-Finally get the client site running on localhost.
+```bash
+pnpm test
+pnpm compile
+
+pnpm hardhat run scripts/deploy.ts --network localhost
+```
+
+#### Start Client 🌐
+
+Finally get the client site running on localhost with the Hardhat node. We need to change a few things:
+
+Open up `/client/src/utils.ts` and update the function `getPublicClent()` to this:
+
+```typescript
+export function getPublicClient() {
+    return createPublicClient({
+        chain: hardhat,
+        transport: http('http://127.0.0.1:8545'),
+    });
+}
+```
+
 Open a new Terminal window and run:
 
-```
+```bash
 cd client/
-npm run start
+pnpm install
+pnpm start
 ```
 
-Head over to `http://localhost:3000` and start using Multisig Wallet!
+Head over to `http://localhost:5173` and start using MultisigWallet!
 
-> Note:
-> Make sure to add the Ganache network to your Metamask
+> Note: Make sure to update your Metamask to use the local network as well. [Check out step 5 in the MetaMask Developer docs](https://docs.metamask.io/wallet/how-to/get-started-building/run-devnet/)
 
 ---
 
@@ -64,7 +79,7 @@ Head over to `http://localhost:3000` and start using Multisig Wallet!
 
 -   Use [this link](https://multi-sig-wallet-vs.netlify.app/) to head over to the live site
 -   Login with Metamask
--   Make sure to change Network to Kovan on Metamask
+-   Make sure to change Network to Sepolia on Metamask
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
@@ -83,15 +98,6 @@ Head over to `http://localhost:3000` and start using Multisig Wallet!
 
 -   Must use one of the 3 approved address to approve transfers
 -   Quorum of 2 means 2 of the 3 address mush approve a transfer for it go to through
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-### Other Addresses cannot approve Transfers
-
-![OnlyApprover GIF](https://raw.githubusercontent.com/jacobvanschenck/Multisig-Wallet/master/GIFs/OnlyApprover.gif)
-
--   Metamask detects the auto failure of non approved addresses
--   Kovan.Etherscan shows that the transaction failed due to `only approvers allowed`. [FailedTransaction](https://kovan.etherscan.io/tx/0xc833486eb58cff0a9c1ac56ec312e706ebf5f469ca6c148577c01a287f7a6b8b)
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
